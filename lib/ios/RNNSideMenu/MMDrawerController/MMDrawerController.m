@@ -1528,27 +1528,27 @@ static inline CGFloat originXForDrawerOriginAndTargetOriginOffset(CGFloat origin
     CGPoint point = [touch locationInView:self.childControllerContainerView];
     MMOpenDrawerGestureMode possibleOpenGestureModes = MMOpenDrawerGestureModeNone;
     if([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]){
-        if([self isPointContainedWithinNavigationRect:point]){
-            possibleOpenGestureModes |= MMOpenDrawerGestureModePanningNavigationBar;
-        }
-        if([self isPointContainedWithinCenterViewContentRect:point]){
-            possibleOpenGestureModes |= MMOpenDrawerGestureModePanningCenterView;
-        }
+//        if([self isPointContainedWithinNavigationRect:point]){
+//            possibleOpenGestureModes |= MMOpenDrawerGestureModePanningNavigationBar;
+//        }
+//        if([self isPointContainedWithinCenterViewContentRect:point]){
+//            possibleOpenGestureModes |= MMOpenDrawerGestureModePanningCenterView;
+//        }
         if([self isPointContainedWithinLeftBezelRect:point] &&
            self.leftDrawerViewController){
             possibleOpenGestureModes |= MMOpenDrawerGestureModeBezelPanningCenterView;
         }
-        if([self isPointContainedWithinRightBezelRect:point] &&
-           self.rightDrawerViewController){
-            possibleOpenGestureModes |= MMOpenDrawerGestureModeBezelPanningCenterView;
-        }
+//        if([self isPointContainedWithinRightBezelRect:point] &&
+//           self.rightDrawerViewController){
+//            possibleOpenGestureModes |= MMOpenDrawerGestureModeBezelPanningCenterView;
+//        }
     }
-    if((self.openDrawerGestureModeMask & MMOpenDrawerGestureModeCustom) > 0 &&
-       self.gestureShouldRecognizeTouch){
-        if(self.gestureShouldRecognizeTouch(self,gestureRecognizer,touch)){
-            possibleOpenGestureModes |= MMOpenDrawerGestureModeCustom;
-        }
-    }
+//    if((self.openDrawerGestureModeMask & MMOpenDrawerGestureModeCustom) > 0 &&
+//       self.gestureShouldRecognizeTouch){
+//        if(self.gestureShouldRecognizeTouch(self,gestureRecognizer,touch)){
+//            possibleOpenGestureModes |= MMOpenDrawerGestureModeCustom;
+//        }
+//    }
     return possibleOpenGestureModes;
 }
 
