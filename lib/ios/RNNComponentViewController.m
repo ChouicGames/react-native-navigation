@@ -26,6 +26,7 @@
 	[super viewWillAppear:animated];
 	[_presenter applyOptions:self.resolveOptions];
 	[self.parentViewController onChildWillAppear];
+	self.view.backgroundColor = [UIColor clearColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
