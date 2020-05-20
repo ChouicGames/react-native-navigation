@@ -16,7 +16,7 @@
     "type": "git",
     "url": "https://github.com/wix/react-native-navigation.git"
   },
-  "main": "lib/dist/index.js",
+  "main": "lib/src/index.ts",
   "typings": "lib/dist/index.d.ts",
   "scripts": {
     "build": "node ./scripts/build",
