@@ -33,7 +33,7 @@
 
 - (void)performAnimationOnce {
     if (_animate) {
-        _animate = NO;
+        // _animate = NO;
         RCTExecuteOnMainQueue(^{
             id<UIViewControllerContextTransitioning> transitionContext = self->_transitionContext;
             UIViewController* fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
