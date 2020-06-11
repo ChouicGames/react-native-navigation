@@ -160,7 +160,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 			});
 		}
 	} else {
-        newVc.waitForRender = newVc.resolveOptionsWithDefault.animations.push.shouldWaitForRender;
+        newVc.waitForRender = NO;
         __weak UIViewController* weakNewVC = newVc;
         [newVc setReactViewReadyCallback:^{
             [fromVC.stack push:weakNewVC onTop:fromVC animated:[weakNewVC.resolveOptionsWithDefault.animations.push.enable getWithDefaultValue:YES] completion:^{
