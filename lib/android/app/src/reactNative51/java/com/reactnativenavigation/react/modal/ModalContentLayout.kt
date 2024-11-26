@@ -8,8 +8,7 @@ import com.facebook.react.uimanager.*
 import com.facebook.react.uimanager.events.EventDispatcher
 import com.facebook.react.views.view.ReactViewGroup
 
-
-class ModalContentLayout(context: Context?) : ReactViewGroup(context), RootView{
+class ModalContentLayout(context: Context?) : ReactViewGroup(context), RootView {
     private var hasAdjustedSize = false
     private var viewWidth = 0
     private var viewHeight = 0
@@ -21,6 +20,7 @@ class ModalContentLayout(context: Context?) : ReactViewGroup(context), RootView{
         viewHeight = h
         this.updateFirstChildView()
     }
+
     private fun updateFirstChildView() {
         if (this.childCount > 0) {
             hasAdjustedSize = false
@@ -29,12 +29,12 @@ class ModalContentLayout(context: Context?) : ReactViewGroup(context), RootView{
             reactContext.runOnNativeModulesQueueThread(object : GuardedRunnable(reactContext) {
                 override fun runGuarded() {
                     val uiManager = this@ModalContentLayout.getReactContext().getNativeModule(
-                            UIManagerModule::class.java
+                        UIManagerModule::class.java
                     ) as UIManagerModule
                     uiManager.updateNodeSize(
-                            viewTag,
-                            this@ModalContentLayout.viewWidth,
-                            this@ModalContentLayout.viewHeight
+                        viewTag,
+                        this@ModalContentLayout.viewWidth,
+                        this@ModalContentLayout.viewHeight
                     )
                 }
             })
@@ -49,15 +49,31 @@ class ModalContentLayout(context: Context?) : ReactViewGroup(context), RootView{
             updateFirstChildView()
         }
     }
-    override fun onChildStartedNativeGesture(androidEvent: MotionEvent?) {
-        mJSTouchDispatcher.onChildStartedNativeGesture(androidEvent, this.getEventDispatcher())
-    }
-    override fun requestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
-    private fun getEventDispatcher(): EventDispatcher? {
-        val reactContext: ReactContext = this.getReactContext()
-        return reactContext.getNativeModule(UIManagerModule::class.java)!!.eventDispatcher
+
+    override fun onChildStartedNativeGesture(child: View, androidEvent: MotionEvent?) {
+        androidEvent?.let {
+            mJSTouchDispatcher.onChildStartedNativeGesture(it, this.getEventDispatcher()!!)
+        }
     }
 
+    override fun onChildStartedNativeGesture(androidEvent: MotionEvent?) {
+        androidEvent?.let {
+            mJSTouchDispatcher.onChildStartedNativeGesture(it, this.getEventDispatcher()!!)
+        }
+    }
+
+    override fun onChildEndedNativeGesture(child: View, androidEvent: MotionEvent?) {
+        androidEvent?.let {
+            mJSTouchDispatcher.onChildEndedNativeGesture(it, this.getEventDispatcher()!!)
+        }
+    }
+
+    override fun requestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+
+    private fun getEventDispatcher(): EventDispatcher? {
+        val reactContext: ReactContext = this.getReactContext()
+        return reactContext.getNativeModule(UIManagerModule::class.java)?.eventDispatcher
+    }
 
     override fun handleException(t: Throwable?) {
         getReactContext().handleException(RuntimeException(t))
@@ -68,14 +84,17 @@ class ModalContentLayout(context: Context?) : ReactViewGroup(context), RootView{
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
-        mJSTouchDispatcher.handleTouchEvent(event, getEventDispatcher())
+        event?.let {
+            mJSTouchDispatcher.handleTouchEvent(it, getEventDispatcher()!!)
+        }
         return super.onInterceptTouchEvent(event)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        mJSTouchDispatcher.handleTouchEvent(event, getEventDispatcher())
+        event?.let {
+            mJSTouchDispatcher.handleTouchEvent(it, getEventDispatcher()!!)
+        }
         super.onTouchEvent(event)
         return true
     }
-
 }
